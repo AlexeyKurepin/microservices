@@ -1,6 +1,0 @@
-docker-machine create --driver google \
---google-project docker-378616 \
---google-zone us-central1-a \
---google-machine-type e2-small \
---google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20230215 \
-docker-host
