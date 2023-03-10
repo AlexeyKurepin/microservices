@@ -1,0 +1,34 @@
+version: '3.6'
+services:
+  ui:
+    image: kurepin83/ui:latest
+    ports:
+      - "9292:9292"
+    networks:
+      - reddit
+    
+  comment:
+    image: kurepin83/comment:latest
+    networks:
+      - reddit
+
+  post:
+    image: kurepin83/post:latest
+    networks:
+      - reddit
+
+  post_db:
+    image: mongo:5.0
+    volumes: 
+      - reddit_db:/data/db
+    networks:
+      reddit:
+        aliases:
+          - post_db
+          - comment_db
+
+networks:
+  reddit: {}
+
+volumes:
+  reddit_db: {}
