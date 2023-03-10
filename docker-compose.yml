@@ -1,0 +1,56 @@
+version: '3.6'
+services:
+  ui:
+    image: $USER_NAME/ui:latest
+    ports:
+      - "9292:9292"
+    networks:
+      - reddit
+    
+  comment:
+    image: $USER_NAME/comment:latest
+    networks:
+      - reddit
+
+  post:
+    image: $USER_NAME/post:latest
+    networks:
+      - reddit
+
+  post_db:
+    image: mongo:5.0
+    volumes: 
+      - reddit_db:/data/db
+    networks:
+      reddit:
+        aliases:
+          - post_db
+          - comment_db
+
+  prometheus:
+    image: $USER_NAME/prometheus
+    ports:
+      - '9090:9090'
+    networks:
+      - reddit
+
+  node-exporter:
+    image: prom/node-exporter:v0.15.0
+    user: root
+    networks:
+      - reddit
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+
+
+networks:
+  reddit: {}
+
+volumes:
+  reddit_db: {}
