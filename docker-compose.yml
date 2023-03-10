@@ -1,19 +1,19 @@
 version: '3.6'
 services:
   ui:
-    image: kurepin83/ui:latest
+    image: $USER_NAME/ui:latest
     ports:
       - "9292:9292"
     networks:
       - reddit
     
   comment:
-    image: kurepin83/comment:latest
+    image: $USER_NAME/comment:latest
     networks:
       - reddit
 
   post:
-    image: kurepin83/post:latest
+    image: $USER_NAME/post:latest
     networks:
       - reddit
 
