@@ -1,0 +1,11 @@
+global:
+  slack_api_url: 'https://hooks.slack.com/services/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'
+
+route:
+  receiver: 'slack-notifications'
+
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#общий'
+    text: 'https://internal.myorg.net/wiki/alerts/{{ .GroupLabels.app }}/{{ .GroupLabels.alertname }}'
